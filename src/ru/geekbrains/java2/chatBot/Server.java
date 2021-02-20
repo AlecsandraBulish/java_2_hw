@@ -19,17 +19,12 @@ public class Server {
             socket = server.accept();
             System.out.println("Client connected");
 
-            while (true) {
-                Scanner scannerIn = new Scanner(System.in);
-                DataInputStream in = new DataInputStream(socket.getInputStream());
-
-                String str2 = scannerIn.nextLine();
-                DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-                out.writeUTF(str2);
 
                 Thread t1 = new Thread(() -> {
                     try {
+                        DataInputStream in = new DataInputStream(socket.getInputStream());
                         while (true) {
+
 
                             String str1 = in.readUTF();
 
@@ -45,8 +40,17 @@ public class Server {
                     }
                 });
                 t1.start();
+            while (true) {
+                Scanner scannerIn = new Scanner(System.in);
 
+
+                String str2 = scannerIn.nextLine();
+                DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+                out.writeUTF(str2);
             }
+
+
+
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -15,19 +15,7 @@ public class Client {
         try {
             socket = new Socket(IP_ADDRESS, PORT);
 
-            while (true) {
-                DataInputStream in = new DataInputStream(socket.getInputStream());
-
-                String str1 = in.readUTF();
-
-                if (str1.equals("/end")) {
-                    System.out.println("Client disconnected");
-                    break;
-                }
-                System.out.println("Server: " + str1);
-
-
-                new Thread(() -> {
+            new Thread(() -> {
                     try {
                         while (true) {
                             Scanner scannerIn = new Scanner(System.in);
@@ -39,8 +27,16 @@ public class Client {
                         e.printStackTrace();
                     }
                 }).start();
+            while (true) {
+                DataInputStream in = new DataInputStream(socket.getInputStream());
 
+                String str1 = in.readUTF();
 
+                if (str1.equals("/end")) {
+                    System.out.println("Client disconnected");
+                    break;
+                }
+                System.out.println("Server: " + str1);
             }
 
         } catch (IOException e) {
